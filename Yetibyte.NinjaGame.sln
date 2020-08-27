@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yetibyte.NinjaGame.Launcher", "Yetibyte.NinjaGame.Launcher\Yetibyte.NinjaGame.Launcher.csproj", "{6FEAEC2D-5861-48AA-B448-41FBF3FB270C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yetibyte.NinjaGame", "Yetibyte.NinjaGame\Yetibyte.NinjaGame.csproj", "{B1966253-9530-4893-A7E2-45D67B36541B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yetibyte.NinjaGame.Pipeline", "Yetibyte.NinjaGame.Pipeline\Yetibyte.NinjaGame.Pipeline.csproj", "{0BCD398E-22FE-4AA4-A3F2-E1800A91F8BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yetibyte.NinjaGame.Test", "Yetibyte.NinjaGame.Test\Yetibyte.NinjaGame.Test.csproj", "{71D11A88-B969-4B43-AC0F-A096306FEF18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E5C4246D-18F3-4477-9DDD-B195B1A6370E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FEAEC2D-5861-48AA-B448-41FBF3FB270C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FEAEC2D-5861-48AA-B448-41FBF3FB270C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FEAEC2D-5861-48AA-B448-41FBF3FB270C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FEAEC2D-5861-48AA-B448-41FBF3FB270C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1966253-9530-4893-A7E2-45D67B36541B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1966253-9530-4893-A7E2-45D67B36541B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1966253-9530-4893-A7E2-45D67B36541B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1966253-9530-4893-A7E2-45D67B36541B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BCD398E-22FE-4AA4-A3F2-E1800A91F8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BCD398E-22FE-4AA4-A3F2-E1800A91F8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BCD398E-22FE-4AA4-A3F2-E1800A91F8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BCD398E-22FE-4AA4-A3F2-E1800A91F8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71D11A88-B969-4B43-AC0F-A096306FEF18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D11A88-B969-4B43-AC0F-A096306FEF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D11A88-B969-4B43-AC0F-A096306FEF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D11A88-B969-4B43-AC0F-A096306FEF18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D39F119A-8FA8-41B9-9986-8C1B00713C33}
+	EndGlobalSection
+EndGlobal
