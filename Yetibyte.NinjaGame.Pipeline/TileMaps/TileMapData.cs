@@ -10,6 +10,7 @@ namespace Yetibyte.NinjaGame.Pipeline.TileMaps
     [XmlRoot(ElementName = "map")]
     public class TileMapData
     {
+
         [XmlAttribute(AttributeName = "tilewidth")]
         public int TileWidth { get; set; }
 

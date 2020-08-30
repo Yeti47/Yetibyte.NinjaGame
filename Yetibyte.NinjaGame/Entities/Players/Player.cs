@@ -16,8 +16,6 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
     public class Player : IGameEntity, ITransformable
     {
-        private const float PLAYER_MASS = 80f;
-
         private const int WALK_ANIM_SPRITE_COUNT = 4;
         private const int ATTACK_ANIM_SPRITE_COUNT = 6;
         private const int SPRITE_SIZE = 64;
@@ -29,8 +27,9 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
         private SoundPool _attackSoundPool;
         private CoolDown _attackCoolDown = new CoolDown(1);
+        private Vector2 _position;
 
-        public Collider Collider { get; private set; }
+        public RectCollider Collider { get; private set; }
         public bool CanWalk
         {
             get
@@ -47,7 +46,15 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
         public int UpdateOrder { get; set; }
 
-        public Vector2 Position { get; set; }
+        public Vector2 Position
+        {
+            get => _position;
+            set
+            {
+                _position = value;
+                Collider?.MoveTo(value);
+            }
+        }
 
         public float Speed { get; set; } = 200f;
         public float JumpPower { get; set; } = 150;
@@ -83,7 +90,7 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
             _attackSoundPool = attackSounds;
 
-            Collider = game.Services.GetService<IPhysicsManager>().CreateCollider(this, PLAYER_MASS, new Vector2(20, 64), 0.05f);
+            Collider = game.Services.GetService<IPhysicsManager>().CreateRectCollider(this, new Vector2(20, 64), 0.05f);
 
         }
 
@@ -99,7 +106,7 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
         public void Update(GameTime gameTime)
         {
-            if(Collider.Velocity.Length() > MathUtil.EPSIOLON)
+            if (Collider.Velocity.Length() > MathUtil.EPSIOLON)
             {
 
             }
@@ -113,7 +120,7 @@ namespace Yetibyte.NinjaGame.Entities.Players
         public void Halt()
         {
             Collider.Velocity = new Vector2(0, Collider.Velocity.Y);
- 
+
             _renderStateMachine.SetState(nameof(PlayerTextureContainer.Idle));
             _renderStateMachine.CurrentState.Animation.Play();
         }
@@ -127,7 +134,7 @@ namespace Yetibyte.NinjaGame.Entities.Players
             _renderStateMachine.SetState(nameof(PlayerTextureContainer.Walk));
             _renderStateMachine.CurrentState.Animation.Play();
 
-            Collider.Velocity = new Vector2(Speed * direction, Velocity.Y) ;
+            Collider.Velocity = new Vector2(Speed * direction, Velocity.Y);
 
             //Collider.ApplyImpulse(new Vector2(direction * Speed, 0));
 

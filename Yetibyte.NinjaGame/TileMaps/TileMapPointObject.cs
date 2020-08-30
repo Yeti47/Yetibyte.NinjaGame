@@ -4,7 +4,9 @@
     {
         public override TileMapObjectType ObjectType => TileMapObjectType.Point;
 
-        public TileMapPointObject(string name, int id, int x, int y) : base(name, id, x, y)
+
+
+        public TileMapPointObject(string name, string type, int id, float x, float y) : base(name, type, id, x, y)
         {
         }
 
