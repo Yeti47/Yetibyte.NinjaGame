@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Yetibyte.NinjaGame.Physics
 {
@@ -6,9 +7,11 @@ namespace Yetibyte.NinjaGame.Physics
     {
         Vector2 Gravity { get; set; }
 
-        Collider CreateCollider(ITransformable transformable, float mass, Vector2 size, bool isDynamic);
-        Collider CreateCollider(ITransformable transformable, float mass, Vector2 size, float density);
-        void DestroyCollider(Collider collider);
+        PolygonCollider CreatePolygonCollider(ITransformable transformable, IEnumerable<Vector2> vertices, float density);
+
+        RectCollider CreateRectCollider(ITransformable transformable, Vector2 size, bool isDynamic);
+        RectCollider CreateRectCollider(ITransformable transformable, Vector2 size, float density);
+        void DestroyCollider(RectCollider collider);
         void Update(GameTime gameTime);
 
         float ToPhysicsUnits(float pixels);

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Box2DX.Collision;
+using Box2DX.Common;
 using Box2DX.Dynamics;
 using Microsoft.Xna.Framework;
 using Yetibyte.NinjaGame.Core;
@@ -68,7 +70,7 @@ namespace Yetibyte.NinjaGame.Physics
             Height = MathUtil.RoundToInt(ToPhysicsUnits(pixelRect.Height)),
         };
 
-        public void DestroyCollider(Collider collider)
+        public void DestroyCollider(RectCollider collider)
         {
             if (collider is null)
             {
@@ -79,12 +81,7 @@ namespace Yetibyte.NinjaGame.Physics
 
         }
 
-        public Collider CreateCollider(ITransformable transformable, float mass, Vector2 size, bool isDynamic)
-        {
-            return CreateCollider(transformable, mass, size, isDynamic ? 1 : 0);
-        }
-
-        public Collider CreateCollider(ITransformable transformable, float mass, Vector2 size, float density)
+        public PolygonCollider CreatePolygonCollider(ITransformable transformable, IEnumerable<Vector2> vertices, float density)
         {
             BodyDef bodyDef = new BodyDef
             {
@@ -94,7 +91,50 @@ namespace Yetibyte.NinjaGame.Physics
                 Position = new Box2DX.Common.Vec2(ToPhysicsUnits(transformable.Position.X), ToPhysicsUnits(transformable.Position.Y)),
                 FixedRotation = true,
                 IsSleeping = false,
-                MassData = new MassData { Mass = mass }
+            };
+
+            Body body = _world.CreateBody(bodyDef);
+
+            PolygonDef polygonDef = new PolygonDef
+            {
+                Density = density,
+                Friction = 0,
+                Vertices = vertices
+                    .Select(v => new Vec2(ToPhysicsUnits(v.X), ToPhysicsUnits(v.Y)))
+                    .ToArray(),
+                VertexCount = vertices.Count()
+            };
+
+            var fix = body.CreateFixture(polygonDef);
+
+            Shape shape = fix.Shape;
+            //PolygonShape polygonShape = shape as PolygonShape;
+            //polygonShape.Set(polygonDef.Vertices, polygonDef.Vertices.Length);
+
+            body.SetMassFromShapes();
+
+            PolygonCollider polygonCollider = new PolygonCollider(transformable, vertices, body, shape, this);
+
+            return polygonCollider;
+
+        }
+
+        public RectCollider CreateRectCollider(ITransformable transformable, Vector2 size, bool isDynamic)
+        {
+            return CreateRectCollider(transformable, size, isDynamic ? 1 : 0);
+        }
+
+        public RectCollider CreateRectCollider(ITransformable transformable, Vector2 size, float density)
+        {
+            BodyDef bodyDef = new BodyDef
+            {
+                UserData = transformable,
+                Angle = 0,
+                IsBullet = false,
+                Position = new Box2DX.Common.Vec2(ToPhysicsUnits(transformable.Position.X), ToPhysicsUnits(transformable.Position.Y)),
+                FixedRotation = true,
+                IsSleeping = false,
+                //MassData = new MassData { Mass = mass }
             };
 
             Body body = _world.CreateBody(bodyDef);
@@ -108,16 +148,12 @@ namespace Yetibyte.NinjaGame.Physics
             polygonDef.SetAsBox(ToPhysicsUnits(size.X / 2f), ToPhysicsUnits(size.Y / 2f));
 
             var fix = body.CreateFixture(polygonDef);
-            
-            //Shape shape = body.CreateShape(polygonDef);
-            //(fix.Shape as PolygonShape).SetAsBox(size.X / 2f, size.Y / 2f);
+
             Shape shape = fix.Shape;
 
             body.SetMassFromShapes();
 
-            //body.SetMass(new MassData { Mass = mass, Center = new Box2DX.Common.Vec2(size.X/2, size.Y/2) });
-
-            Collider collider = new Collider(transformable, body, shape, size, this);
+            RectCollider collider = new RectCollider(transformable, body, shape, size, this);
 
             return collider;
         }

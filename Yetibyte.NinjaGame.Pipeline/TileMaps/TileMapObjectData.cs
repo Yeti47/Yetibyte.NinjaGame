@@ -15,10 +15,10 @@ namespace Yetibyte.NinjaGame.Pipeline.TileMaps
         public string Type { get; set; }
 
         [XmlAttribute(AttributeName = "x")]
-        public int X { get; set; }
+        public double X { get; set; }
 
         [XmlAttribute(AttributeName = "y")]
-        public int Y { get; set; }
+        public double Y { get; set; }
 
         [XmlAttribute(AttributeName = "width")]
         public int Width { get; set; }
@@ -27,6 +27,7 @@ namespace Yetibyte.NinjaGame.Pipeline.TileMaps
         public int Height { get; set; }
 
         [XmlArray(ElementName = "properties")]
+        [XmlArrayItem(ElementName = "property")]
         public List<TileMapProperty> Properties { get; set; }
 
         [XmlElement(ElementName = "polygon", IsNullable = true)]

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,16 +15,18 @@ namespace Yetibyte.NinjaGame.SceneManagement
     {
         private readonly List<SceneDefinition> _sceneDefinitions = new List<SceneDefinition>();
         private EntityManager _entityManager;
+        private readonly GameServiceContainer _gameServices;
         private ContentManager _contentManager;
 
         public string SceneDefinitionRootFolder { get; set; }
 
         public Scene CurrentScene { get; private set; }
 
-        public SceneManager(ContentManager content, EntityManager entityManager, string sceneDefRootFolder = "SceneDefinitions")
+        public SceneManager(GameServiceContainer gameServices, ContentManager content, EntityManager entityManager, string sceneDefRootFolder = "SceneDefinitions")
         {
             SceneDefinitionRootFolder = sceneDefRootFolder;
             _entityManager = entityManager;
+            this._gameServices = gameServices;
             _contentManager = content;
         }
 
@@ -89,7 +92,7 @@ namespace Yetibyte.NinjaGame.SceneManagement
                 tileMap.LoadTileSets(_contentManager);
             }
 
-            Scene scene = new Scene(sceneDef.SceneId, sceneDef.Name, _entityManager, sceneDelegate, tileMap);
+            Scene scene = new Scene(_contentManager, _gameServices, sceneDef.SceneId, sceneDef.Name, _entityManager, sceneDelegate, tileMap);
 
             CurrentScene = scene;
 

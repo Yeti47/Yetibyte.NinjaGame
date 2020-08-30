@@ -8,6 +8,7 @@ using Yetibyte.NinjaGame.TileMaps;
 
 namespace Yetibyte.NinjaGame.Entities.TileMaps
 {
+
     public class TileMapLayerRenderer : IGameEntity
     {
         public RenderLayer RenderLayer { get; set; }

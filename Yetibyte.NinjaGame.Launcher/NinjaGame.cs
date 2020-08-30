@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 using Yetibyte.NinjaGame.Audio;
 using Yetibyte.NinjaGame.Core;
 using Yetibyte.NinjaGame.Entities;
@@ -25,9 +26,11 @@ namespace Yetibyte.NinjaGame.Launcher
         private Player _player;
         private PlayerController _playerController;
 
-        private Collider _testCollider;
-        private Collider _testGround;
+        private RectCollider _testCollider;
+        private RectCollider _testGround;
         private SceneManager _sceneManager;
+
+        private PolygonCollider _testPolygonCollider;
 
         public NinjaGame()
         {
@@ -50,8 +53,18 @@ namespace Yetibyte.NinjaGame.Launcher
 
             var testObj = new TestObject { Position = new Vector2(90, 30) };
             var testGroundObj = new TestObject { Position = new Vector2(10, 300) };
-            _testCollider = Services.GetService<IPhysicsManager>().CreateCollider(testObj, 10, new Vector2(20, 20), 10);
-            _testGround = Services.GetService<IPhysicsManager>().CreateCollider(testGroundObj, 100, new Vector2(400, 60), false);
+            var testPolygonObj = new TestObject { Position = new Vector2(200, 400) };
+            Vector2[] testPolyVerts = new Vector2[] {new Vector2(40, 0), new Vector2(200, -50), new Vector2(200, 180), new Vector2(0, 180) };
+            //Vector2[] testPolyVerts = new Vector2[] { new Vector2(0, 0), new Vector2(100, 0), new Vector2(100, 100), new Vector2(0, 100) };
+
+            //testPolyVerts = testPolyVerts.Reverse().ToArray();
+
+            //_testCollider = Services.GetService<IPhysicsManager>().CreateRectCollider(testObj, new Vector2(20, 20), 10);
+            //_testGround = Services.GetService<IPhysicsManager>().CreateRectCollider(testGroundObj, new Vector2(400, 60), false);
+
+            //_testPolygonCollider = Services.GetService<IPhysicsManager>()
+            //    .CreatePolygonCollider(testPolygonObj, testPolyVerts, 0);
+        
         }
 
         protected override void LoadContent()
@@ -60,7 +73,7 @@ namespace Yetibyte.NinjaGame.Launcher
 
             _entityManager = new EntityManager(GraphicsDevice);
 
-            _sceneManager = new SceneManager(Content, _entityManager);
+            _sceneManager = new SceneManager(Services, Content, _entityManager);
 
             Services.AddService<ISceneManager>(_sceneManager);
 
@@ -82,7 +95,7 @@ namespace Yetibyte.NinjaGame.Launcher
 
             _player = new Player(this, container, LoadPlayerAttackSounds())
             {
-                Position = new Vector2(100, 100)
+                Position = new Vector2(150, 100)
             };
             _playerController = new PlayerController(_player);
 
@@ -119,8 +132,8 @@ namespace Yetibyte.NinjaGame.Launcher
             _player.Update(gameTime);
             _playerController.Update(gameTime);
 
-            _testCollider.Update(gameTime);
-            _testGround.Update(gameTime);
+            //_testCollider.Update(gameTime);
+            //_testGround.Update(gameTime);
 
             _entityManager.Update(gameTime);
 
@@ -144,8 +157,9 @@ namespace Yetibyte.NinjaGame.Launcher
 
             _entityManager.Draw(gameTime);
 
-            _testCollider.DebugDraw(_spriteBatch, _debugTexture, Color.Red);
-            _testGround.DebugDraw(_spriteBatch, _debugTexture, Color.Green);
+            //_testCollider.DebugDraw(_spriteBatch, _debugTexture, Color.Red);
+            //_testGround.DebugDraw(_spriteBatch, _debugTexture, Color.Green);
+            //_testPolygonCollider.DebugDraw(_spriteBatch, _debugTexture, Color.Magenta);
 
             _sceneManager?.CurrentScene?.Draw(gameTime);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,10 @@ namespace Yetibyte.NinjaGame.Entities
 {
     public interface ITileMapPlaceable : IGameEntity
     {
-        void Initialize(ContentManager content, PropertyMap propMap);
+
+        Vector2 Position { get; }
+
+        void Initialize(GameServiceContainer gameServices, ContentManager content, PropertyMap propMap, Vector2 position);
 
     }
 }
