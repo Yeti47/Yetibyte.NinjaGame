@@ -98,7 +98,7 @@ namespace Yetibyte.NinjaGame.Physics
             PolygonDef polygonDef = new PolygonDef
             {
                 Density = density,
-                Friction = 0,
+                Friction = 1,
                 Vertices = vertices
                     .Select(v => new Vec2(ToPhysicsUnits(v.X), ToPhysicsUnits(v.Y)))
                     .ToArray(),
@@ -142,7 +142,7 @@ namespace Yetibyte.NinjaGame.Physics
             PolygonDef polygonDef = new PolygonDef
             {
                 Density = density,
-                Friction = 0
+                Friction = 1
             };
 
             polygonDef.SetAsBox(ToPhysicsUnits(size.X / 2f), ToPhysicsUnits(size.Y / 2f));
