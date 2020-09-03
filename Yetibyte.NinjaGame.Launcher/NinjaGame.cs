@@ -64,7 +64,11 @@ namespace Yetibyte.NinjaGame.Launcher
 
             //_testPolygonCollider = Services.GetService<IPhysicsManager>()
             //    .CreatePolygonCollider(testPolygonObj, testPolyVerts, 0);
-        
+
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 600;
+            _graphics.ApplyChanges();
+
         }
 
         protected override void LoadContent()
