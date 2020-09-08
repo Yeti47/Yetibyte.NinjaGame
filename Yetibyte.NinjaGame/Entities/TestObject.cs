@@ -9,5 +9,7 @@ namespace Yetibyte.NinjaGame.Entities
     public class TestObject : ITransformable
     {
         public Vector2 Position { get; set; }
+
+        public IGameEntity GetGameEntity() => null;
     }
 }

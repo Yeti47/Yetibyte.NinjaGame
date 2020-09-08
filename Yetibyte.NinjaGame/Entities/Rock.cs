@@ -54,7 +54,7 @@ namespace Yetibyte.NinjaGame.Entities
 
             IPhysicsManager physicsManager = gameServices.GetService<IPhysicsManager>();
 
-            this.Collider = physicsManager.CreateRectCollider(this, new Vector2(ROCK_SIZE), false);
+            this.Collider = physicsManager.CreateRectCollider(this, new Vector2(ROCK_SIZE), 500);
 
             _debugTexture = content.Load<Texture2D>(DEBUG_TEXTURE_PATH);
         }
@@ -67,6 +67,10 @@ namespace Yetibyte.NinjaGame.Entities
 
         public void Update(GameTime gameTime)
         {
+            Position = Collider.Position;
         }
+
+        public IGameEntity GetGameEntity() => this;
+
     }
 }

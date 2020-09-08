@@ -38,7 +38,7 @@ namespace Yetibyte.NinjaGame.Entities.Players
             }
         }
 
-        public Vector2 Velocity => Collider.Velocity;
+        public Vector2 Velocity => Collider?.Velocity ?? Vector2.Zero;
 
         public RenderLayer RenderLayer { get; set; } = RenderLayer.Two;
 
@@ -90,7 +90,7 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
             _attackSoundPool = attackSounds;
 
-            Collider = game.Services.GetService<IPhysicsManager>().CreateRectCollider(this, new Vector2(20, 64), 0.05f);
+            Collider = game.Services.GetService<IPhysicsManager>().CreateRectCollider(this, new Vector2(20, 64), 60f);
 
         }
 
@@ -106,7 +106,7 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
         public void Update(GameTime gameTime)
         {
-            if (Collider.Velocity.Length() > MathUtil.EPSIOLON)
+            if (Collider?.Velocity.Length() > MathUtil.EPSIOLON)
             {
 
             }
@@ -114,12 +114,14 @@ namespace Yetibyte.NinjaGame.Entities.Players
             _renderStateMachine.Update(gameTime);
             _attackCoolDown.Update(gameTime);
 
-            Position = Collider.Position;
+            if(Collider != null)
+                Position = Collider.Position;
         }
 
         public void Halt()
         {
-            Collider.Velocity = new Vector2(0, Collider.Velocity.Y);
+            //if(Collider != null)
+            //    Collider.Velocity = new Vector2(0, Collider.Velocity.Y);
 
             _renderStateMachine.SetState(nameof(PlayerTextureContainer.Idle));
             _renderStateMachine.CurrentState.Animation.Play();
@@ -134,9 +136,18 @@ namespace Yetibyte.NinjaGame.Entities.Players
             _renderStateMachine.SetState(nameof(PlayerTextureContainer.Walk));
             _renderStateMachine.CurrentState.Animation.Play();
 
-            Collider.Velocity = new Vector2(Speed * direction, Velocity.Y);
+            if(Collider != null)
+            {
+                //Collider.Velocity = new Vector2(Speed * direction, Velocity.Y);
 
-            //Collider.ApplyImpulse(new Vector2(direction * Speed, 0));
+                //Collider.ApplyImpulse(new Vector2(direction * Speed, 0));
+
+                float targetVelo = direction * Speed;
+                float veloDelta = targetVelo - Velocity.X;
+
+                Collider.ApplyForce(new Vector2(veloDelta * Collider.Mass, 0));
+            }
+
 
         }
 
@@ -149,7 +160,8 @@ namespace Yetibyte.NinjaGame.Entities.Players
             {
                 _attackSoundPool.PlayRandom();
 
-                Collider.Velocity = new Vector2(0, Collider.Velocity.Y);
+                if(Collider != null)
+                    Collider.Velocity = new Vector2(0, Collider.Velocity.Y);
 
                 _renderStateMachine.SetState(nameof(PlayerTextureContainer.Attack));
                 _renderStateMachine.CurrentState.Animation.Play();
@@ -158,6 +170,9 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
         public bool Jump()
         {
+            if (Collider == null)
+                return false;
+
             float impulse = Collider.Mass * JumpPower;
             Collider.ApplyImpulse(-Vector2.UnitY * impulse);
 
@@ -165,5 +180,6 @@ namespace Yetibyte.NinjaGame.Entities.Players
 
         }
 
+        public IGameEntity GetGameEntity() => this;
     }
 }

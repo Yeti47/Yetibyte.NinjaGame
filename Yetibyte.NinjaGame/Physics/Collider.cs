@@ -3,6 +3,7 @@ using Box2DX.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
+using Yetibyte.NinjaGame.Entities;
 
 namespace Yetibyte.NinjaGame.Physics
 {
@@ -36,6 +37,8 @@ namespace Yetibyte.NinjaGame.Physics
         }
 
         public ITransformable Transformable { get; private set; }
+
+
 
         public Body Body => _body;
 
@@ -72,6 +75,7 @@ namespace Yetibyte.NinjaGame.Physics
         {
             Vector2 physicsPosition = _physics.ToPhysicsUnits(position);
             _body.SetPosition(new Box2DX.Common.Vec2(physicsPosition.X, physicsPosition.Y));
+
         }
 
     }

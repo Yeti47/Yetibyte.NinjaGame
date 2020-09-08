@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using Yetibyte.NinjaGame.Physics.RayCasting;
 
 namespace Yetibyte.NinjaGame.Physics
 {
@@ -24,5 +26,9 @@ namespace Yetibyte.NinjaGame.Physics
         Rectangle ToPixels(Rectangle physicsRect);
         Rectangle ToPhysicsUnits(Rectangle pixelRect);
 
+        RayCastResult RayCastSingle(Vector2 start, Vector2 end);
+
+        RayCastResult RayCast(Vector2 start, Vector2 end, int maxHitCount);
+        void EnableDebugDraw(SpriteBatch spriteBatch, Texture2D debugTexture);
     }
 }

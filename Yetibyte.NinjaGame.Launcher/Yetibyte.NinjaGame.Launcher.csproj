@@ -27,11 +27,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Yetibyte.NinjaGame\Yetibyte.NinjaGame.csproj" />
+    <Folder Include="Content\SceneDefinitions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Content\SceneDefinitions\" />
+    <ProjectReference Include="..\Yetibyte.NinjaGame\Yetibyte.NinjaGame.csproj" />
   </ItemGroup>
 
 </Project>

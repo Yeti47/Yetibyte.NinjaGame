@@ -43,5 +43,7 @@ namespace Yetibyte.NinjaGame.Entities.TileMaps
         public void Update(GameTime gameTime)
         {
         }
+
+        public IGameEntity GetGameEntity() => this;
     }
 }

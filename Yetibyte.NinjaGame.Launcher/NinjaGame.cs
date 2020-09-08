@@ -18,7 +18,12 @@ namespace Yetibyte.NinjaGame.Launcher
 {
     public class NinjaGame : Game, INinjaGame
     {
+
+        Vector2 rayStart = new Vector2(400, 300);
+        Vector2 rayEnd = new Vector2(500, 800);
+
         private Texture2D _debugTexture;
+        SpriteBatch _debugSpriteBatch;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -81,6 +86,7 @@ namespace Yetibyte.NinjaGame.Launcher
 
             Services.AddService<ISceneManager>(_sceneManager);
 
+
             // TODO: use this.Content to load your game content here
             Texture2D idleTexture = Content.Load<Texture2D>("Textures/main-hero_idle-unarmed");
             Texture2D idleArmedTexture = Content.Load<Texture2D>("Textures/main-hero_idle-armed");
@@ -105,6 +111,11 @@ namespace Yetibyte.NinjaGame.Launcher
 
             _debugTexture = new Texture2D(GraphicsDevice, 1, 1);
             _debugTexture.SetData(new[] { Color.White });
+
+            _debugSpriteBatch = new SpriteBatch(this.GraphicsDevice);
+
+            //Services.GetService<IPhysicsManager>().EnableDebugDraw(_spriteBatch, _debugTexture);
+
 
             TileSet testTileSet = Content.Load<TileSet>("Test");
             testTileSet.LoadTexture(Content);
@@ -145,6 +156,21 @@ namespace Yetibyte.NinjaGame.Launcher
 
             Services.GetService<IPhysicsManager>().Update(gameTime);
 
+            var raycastResult = Services.GetService<IPhysicsManager>().RayCastSingle(rayStart, rayEnd);
+            //var raycastResult = Services.GetService<IPhysicsManager>().RayCast(rayStart, rayEnd, 5);
+
+            if (raycastResult.HasHit)
+            {
+
+                rayEnd = raycastResult.HitPoint;
+
+            }
+            else
+            {
+                rayEnd = new Vector2(500, 800);
+            }
+
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -166,6 +192,12 @@ namespace Yetibyte.NinjaGame.Launcher
             //_testPolygonCollider.DebugDraw(_spriteBatch, _debugTexture, Color.Magenta);
 
             _sceneManager?.CurrentScene?.Draw(gameTime);
+
+
+
+
+            _spriteBatch.DrawLine(_debugTexture, rayStart, rayEnd, Color.Purple, 3);
+
 
             _spriteBatch.End();
         }
